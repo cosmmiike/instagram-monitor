@@ -1,0 +1,21 @@
+<html>
+    <head>
+      {% if title %}
+      <title>{{ title }}</title>
+      {% else %}
+      <title>Welcome to Insta Monitor</title>
+      {% endif %}
+    </head>
+    <body>
+        <div>
+            Insta Monitor:
+            <a href="/index">Home</a>
+            <a href="#">Sign in</a>
+            <a href="#">Search</a>
+            <a href="#">Favorite</a>
+            <a href="#">Memories</a>
+        </div>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>
