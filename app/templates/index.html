@@ -1,5 +1,13 @@
 {% extends"base.html" %}
 
 {% block content %}
-<h1>Hi, {{ current_user.username }}!</h1>
+<img src="{{ self_info.user.profile_pic_url }}" alt="">
+<p><b>id: </b>{{ self_info.user.pk }}</p>
+<p><b>Username: </b>{{ self_info.user.username }}</p>
+<p><b>Fullname: </b>{{ self_info.user.full_name }}</p>
+<p><b>Biography: </b>{{ self_info.user.biography }}</p>
+<p><b>E-mail: </b>{{ self_info.user.email }}</p>
+<p><b>Link: </b><a href="{{ self_info.user.external_url }}">{{ self_info.user.external_url }}</a></p>
+<p><b>Phone number: </b>{{ self_info.user.phone_number }}</p>
+
 {% endblock %}
