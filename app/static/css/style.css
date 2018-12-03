@@ -1,0 +1,281 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  color: rgb(38, 38, 38);
+  background-color: rgb(250, 250, 250)
+}
+
+h1 {
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+.login__description {
+  margin-bottom: 30px;
+  font-size: 16px;
+  line-height: 20px;
+  color: rgb(38, 38, 38);
+}
+
+h2 {
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.login__block {
+  padding: 40px 40px 30px;
+  width: 300px;
+  margin: 0 auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgb(255, 255, 255);
+}
+
+.form {
+  margin: 0;
+}
+
+.form__field_group {
+  margin-bottom: 15px;
+}
+
+.form__label {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: rgb(150, 150, 150);
+}
+
+.form__field {
+  margin: 0;
+}
+
+.form__text_input {
+  height: 30px;
+  padding: 0 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: rgb(38, 38, 38);
+}
+
+.form__error_message {
+  display: block;
+  color: red;
+  font-size: 12px;
+  margin: 0;
+  margin-top: 5px;
+}
+
+.form__checkbox {
+  height: 30px;
+  font-size: 14px;
+  color: rgb(150, 150, 150);
+}
+
+.form__submit {
+  height: 36px;
+  margin-top: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  color: rgb(255, 255, 255);
+  border: none;
+  background-color: #3897f0;
+}
+
+.anchor {
+  padding-top: 90px;
+}
+
+.container {
+  width: 980px;
+  margin: 0 auto;
+  padding: 25px 15px;
+}
+
+.messages {
+  padding: 90px 0 0 0;
+}
+
+.messages__list {
+  display: block;
+  list-style: none;
+  padding: 25px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.fw {
+  display: block;
+  width: 100%;
+}
+
+.main_navigation {
+  position: fixed;
+  top: 0;
+  background-color: rgb(255, 255, 255);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.main_navigation__menu {
+  list-style-type: none;
+  overflow: auto;
+}
+
+.main_navigation__item {
+  display: inline-block;
+  float: left;
+  padding: 3px 12px;
+}
+
+.main_navigation__item--login,
+.main_navigation__item--logout {
+  font-size: 14px;
+  float: right;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  background-color: rgb(255, 255, 255);
+  font-weight: 600;
+}
+
+.main_navigation__item--login {
+  border: none;
+  background-color: #3897f0;
+}
+
+.main_navigation__item a {
+  display: block;
+  height: 22px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+}
+
+.main_navigation__item--login a {
+  color: rgb(255, 255, 255);
+}
+
+.main_navigation__item--logo {
+  font-size: 20px;
+  font-weight: 600;
+  margin-right: 30px;
+}
+
+.main_navigation__item--logo a {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.profile_info {
+  overflow: auto;
+  padding-bottom: 25px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.profile_info__userpic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  float: left;
+  margin-right: 50px;
+}
+
+.profile_info__list {
+  display: block;
+  float: left;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profile_info__item {
+  margin-bottom: 7px;
+}
+
+.profile_info__item p {
+  margin: 0;
+}
+
+.profile_info__item--username {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.profile_info__item--full_name {
+  font-weight: 600;
+}
+
+.profile_info__item--biography {
+  margin-bottom: 20px;
+}
+
+.profile_info__item--email a,
+.profile_info__item--tel a {
+  color: rgb(38, 38, 38);
+  text-decoration: none;
+  border-bottom: 1px solid rgb(38, 38, 38);
+}
+
+.stories{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.stories__tray {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.stories__user {
+  display: inline-block;
+  padding: 0 17px;
+  text-align: center;
+  width: 100px;
+}
+
+.stories__img {
+  width: 105px;
+  height: 105px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+}
+
+.stories__user p {
+  margin: 0;
+  font-size: 14px;
+  overflow-x: hidden;
+}
+
+.posts__feed {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.posts__item {
+  display: inline-block;
+  padding: 0 17px;
+  width: 200px;
+}
+
+.posts__img {
+  display: block;
+  width: 220px;
+  height: 280px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  background-size: auto 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #eee;
+}
+
+.posts__item p {
+  margin: 0;
+  margin-bottom: 30px;
+  overflow-x: hidden;
+  font-size: 14px;
+}

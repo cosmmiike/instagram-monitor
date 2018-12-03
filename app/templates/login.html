@@ -1,24 +1,31 @@
 {% extends "base.html" %}
 
-{% block content %}
-<h1>Sign In</h1>
-<form action="" method="post" novalidate>
-  {{ form.hidden_tag() }}
-  <p>
-    {{ form.username.label }}<br>
-    {{ form.username(size=32) }}<br>
-    {% for error in form.username.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>
-    {{ form.password.label }}<br>
-    {{ form.password(size=32) }}<br>
-    {% for error in form.password.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-  </p>
-  <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-  <p>{{ form.submit() }}</p>
-</form>
+{% block app_content %}
+<section class="login container">
+  <div class="login__block">
+    <h1>Sign In</h1>
+    <p class="login__description">Enter your Instagram username and password</p>
+    <form class="form" action="" method="post" novalidate>
+      {{ form.hidden_tag() }}
+      <div class="form__field_group">
+        <p class="form__label">{{ form.username.label }}</p>
+        <p class="form__field">{{ form.username(size=32, class="form__text_input fw") }}</p>
+        {% for error in form.username.errors %}
+          <span class="form__error_message">{{ error }}</span>
+        {% endfor %}
+      </div>
+
+      <div class="form__field_group">
+        <p class="form__label">{{ form.password.label }}</p>
+        <p class="form__field">{{ form.password(size=32, class="form__text_input fw") }}</p>
+        {% for error in form.password.errors %}
+          <div class="form__error_message">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <p class="fw">{{ form.remember_me() }} {{ form.remember_me.label(class="form__checkbox") }}</p>
+      <p>{{ form.submit(class="form__submit fw") }}</p>
+    </form>
+  </div>
+</section>
 {% endblock %}

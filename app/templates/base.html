@@ -6,32 +6,51 @@
   {% else %}
   <title>Welcome to Insta Monitor</title>
   {% endif %}
+  <link rel="stylesheet" href="../static/css/style.css">
 </head>
 
 <body>
-  <div>
-    Insta Monitor:
-    {% if current_user.is_anonymous %}
-    <a href="{{ url_for('login') }}">Sign in</a>
-    {% else %}
-    <a href="{{ url_for('index') }}">Home</a>
-    <a href="#">Search</a>
-    <a href="#">Favorite</a>
-    <a href="#">Memories</a>
-    <a href="{{ url_for('logout') }}">Logout</a>
+  <nav class="main_navigation fw">
+    <ul class="main_navigation__menu container">
+      <li class="main_navigation__item main_navigation__item--logo">
+        <a href="{{ url_for('index') }}">Insta Monitor</a>
+      </li>
+      {% if current_user.is_anonymous %}
+        <li class="main_navigation__item main_navigation__item--login">
+          <a href="{{ url_for('login') }}">Sign in</a>
+        </li>
+      {% else %}
+        <li class="main_navigation__item">
+          <a href="#">Search</a>
+        </li>
+        <li class="main_navigation__item">
+          <a href="#">Favorite</a>
+        </li>
+        <li class="main_navigation__item">
+          <a href="#">Memories</a>
+        </li>
+        <li class="main_navigation__item main_navigation__item--logout">
+          <a href="{{ url_for('logout') }}">Log out</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+
+  <section class="messages anchor">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class="container messages__list">
+      {% for message in messages %}
+      <li class="messages__item">{{ message }}</li>
+      {% endfor %}
+    </ul>
     {% endif %}
-  </div>
-  <hr>
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-  <ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  {% endwith %}
-  {% block content %}{% endblock %}
+    {% endwith %}
+  </section>
+
+  <main>
+    {% block app_content %}{% endblock %}
+  </main>
 </body>
 
 </html>
