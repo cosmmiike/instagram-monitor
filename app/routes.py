@@ -1,20 +1,28 @@
-from flask import render_template, flash, redirect, url_for, request, session
+from flask import render_template, flash, redirect, url_for, request, session,\
+                  make_response
 from flask_login import current_user, login_user, logout_user, login_required
+import json
 
 from app import app, db
 from app.forms import LoginForm
 from app.models import User
-from app.instagram import self_info
+from app.instagram import set_instagram_cookies, get_instagram_api, self_info,\
+                          get_stories, get_feed
 
 
 @app.route('/')
 @app.route('/index')
 def index():
-    if current_user.is_anonymous:
+    if not current_user.is_authenticated:
         return redirect(url_for('login'))
-    self_info = session['self_info']
-    return render_template('index.html', title='Home',
-                           self_info=self_info)
+    settings = request.cookies.get('instagram-monitor')
+    api = get_instagram_api(settings)
+    info = self_info(api)['user']
+    stories_tray = get_stories(api)['tray'][:5]
+    posts_feed = get_feed(api)['feed_items']
+    print(json.dumps(posts_feed))
+    return render_template('index.html', title='Home', self_info=info,
+                           stories=stories_tray, posts=posts_feed)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -24,39 +32,38 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        settings = request.cookies.get('instagram-monitor')
 
+        if settings is None:
+            settings = set_instagram_cookies(username=form.username.data, password=form.password.data)
+
+        api = get_instagram_api(cached_settings=settings)
+        if api is None:
+            flash('Invalid username or password or connection error')
+            return redirect(url_for('login'))
+        else:
+            resp = make_response(redirect(url_for('login')))
+            resp.set_cookie('instagram-monitor', value=settings)
+            new_cookies = True
+
+        user = User.query.filter_by(username=form.username.data).first()
         if user is None:
             user = User(username=form.username.data)
-            user.set_api(password=form.password.data)
-            if user.api is None:
-                flash('Invalid username or password')
-                return redirect(url_for('login'))
-            elif user.api == -1:
-                flash('For security purposes, Instagram needs to check and \
-                    validate your account online')
-                return redirect(url_for('login'))
             db.session.add(user)
-            db.session.commit()
-        else:
-            user.set_api(password=form.password.data)
-            if user.api is None:
-                flash('Invalid username or password')
-                return redirect(url_for('login'))
             db.session.commit()
 
         login_user(user, remember=form.remember_me.data)
-        next_page = request.args.get('next')
 
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
+        if new_cookies:
+            return resp
 
-        session['self_info'] = self_info(user.api)
-        return redirect(next_page)
+        return redirect(url_for('index'))
     return render_template('login.html', title='Sign in', form=form)
 
 
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    resp = make_response(redirect(url_for('index')))
+    resp.set_cookie('instagram-monitor', '', expires=0)
+    return resp

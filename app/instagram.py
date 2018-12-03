@@ -1,16 +1,6 @@
+import json
+import codecs
 from instagram_private_api import Client
-
-
-def insta_api(username: str, password: str) -> Client:
-    """Get access to instagram api for a specified user"""
-    try:
-        api = Client(username, password)
-        return api
-    except Exception as e:
-        print(e.code, e)
-        if str(e) == "checkpoint_challenge_required":
-            return -1
-        return None
 
 
 def user_id_to_username(api: Client, id: int) -> dict:
@@ -34,10 +24,46 @@ def user_info(api: Client, username: str) -> dict:
     return api.user_info(user_id)
 
 
-def stories(api: Client) -> dict:
+def get_stories(api: Client) -> dict:
     return api.reels_tray()
 
 
-# if __name__ == "__main__":
-#     api = insta_api('cosmmiike', '31219787q')
-#     print(self_info(api))
+def get_feed(api: Client) -> dict:
+    return api.feed_timeline()
+
+
+def to_json(python_object):
+    if isinstance(python_object, bytes):
+        return {'__class__': 'bytes',
+                '__value__': codecs.encode(python_object, 'base64').decode()}
+    raise TypeError(repr(python_object) + ' is not JSON serializable')
+
+
+def from_json(json_object):
+    if '__class__' in json_object and json_object['__class__'] == 'bytes':
+        return codecs.decode(json_object['__value__'].encode(), 'base64')
+    return json_object
+
+
+def set_instagram_cookies(username, password):
+    try:
+        api = Client(username, password)
+        cached_settings = json.dumps(api.settings, default=to_json)
+        print('New settings')
+        return cached_settings
+
+    except Exception as e:
+        print(e)
+        return None
+
+
+def get_instagram_api(cached_settings):
+    try:
+        settings = json.loads(cached_settings, object_hook=from_json)
+        api = Client(username=None, password=None, settings=settings)
+        print('Reusing settings')
+        return api
+
+    except Exception as e:
+        print(e)
+        return None

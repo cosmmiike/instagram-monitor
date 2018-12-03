@@ -1,13 +1,52 @@
 {% extends"base.html" %}
 
 {% block content %}
-<img src="{{ self_info.user.profile_pic_url }}" alt="">
-<p><b>id: </b>{{ self_info.user.pk }}</p>
-<p><b>Username: </b>{{ self_info.user.username }}</p>
-<p><b>Fullname: </b>{{ self_info.user.full_name }}</p>
-<p><b>Biography: </b>{{ self_info.user.biography }}</p>
-<p><b>E-mail: </b>{{ self_info.user.email }}</p>
-<p><b>Link: </b><a href="{{ self_info.user.external_url }}">{{ self_info.user.external_url }}</a></p>
-<p><b>Phone number: </b>{{ self_info.user.phone_number }}</p>
+
+<img src="{{ self_info.profile_pic_url }}" alt="">
+<p><b>id: </b>{{ self_info['pk'] }}</p>
+<p><b>Username: </b>{{ self_info['username'] }}</p>
+<p><b>Fullname: </b>{{ self_info['full_name'] }}</p>
+<p><b>Biography: </b>{{ self_info['biography'] }}</p>
+<p><b>E-mail: </b>{{ self_info['email'] }}</p>
+<p><b>Link: </b><a href="{{ self_info['external_url'] }}">{{ self_info['external_url'] }}</a></p>
+<p><b>Phone number: </b>{{ self_info['phone_number'] }}</p>
+
+<h1>Feed</h1>
+<h2>Following</h2>
+
+<table>
+  <tr>
+    {% for story in stories %}
+    <td>
+      <img src="{{ story['user']['profile_pic_url'] }}" alt="">
+      <p>{{ story['user']['username'] }}</p>
+    </td>
+    {% endfor %}
+  </tr>
+</table>
+
+<h2>Posts</h2>
+
+<table>
+  <tr>
+    {% for post in posts %}
+    <td>
+      {% if post['media_or_ad'] %}
+        {% if post['media_or_ad']['media_type'] == 1 %}
+          <img src="{{ post['media_or_ad']['image_versions2']['candidates'][1]['url'] }}" alt="">
+        {% endif %}
+
+        {% if post['media_or_ad']['media_type'] == 2 %}
+          <img src="{{ post['media_or_ad']['image_versions2']['candidates'][1]['url'] }}" alt="">
+        {% endif %}
+
+        {% if post['media_or_ad']['media_type'] == 8 %}
+          <img src="{{ post['media_or_ad']['carousel_media'][0]['image_versions2']['candidates'][1]['url'] }}" alt="">
+        {% endif %}
+      {% endif %}
+    </td>
+    {% endfor %}
+  </tr>
+</table>
 
 {% endblock %}
