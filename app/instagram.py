@@ -54,6 +54,8 @@ def set_instagram_cookies(username, password):
 
     except Exception as e:
         print(e)
+        if str(e) == 'checkpoint_challenge_required':
+            return -1
         return None
 
 
@@ -66,4 +68,6 @@ def get_instagram_api(cached_settings):
 
     except Exception as e:
         print(e)
+        if str(e) == 'checkpoint_challenge_required':
+            return -1
         return None

@@ -31,7 +31,7 @@
   <tr>
     {% for post in posts %}
     <td>
-      {% if post['media_or_ad'] %}
+      {% if 'media_or_ad' in post and 'injected' not in post['media_or_ad'] %}
         {% if post['media_or_ad']['media_type'] == 1 %}
           <img src="{{ post['media_or_ad']['image_versions2']['candidates'][1]['url'] }}" alt="">
         {% endif %}
@@ -43,6 +43,8 @@
         {% if post['media_or_ad']['media_type'] == 8 %}
           <img src="{{ post['media_or_ad']['carousel_media'][0]['image_versions2']['candidates'][1]['url'] }}" alt="">
         {% endif %}
+
+        <p>{{ post['media_or_ad']['user']['username'] }}</p>
       {% endif %}
     </td>
     {% endfor %}

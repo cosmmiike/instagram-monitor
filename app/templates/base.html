@@ -14,11 +14,11 @@
     {% if current_user.is_anonymous %}
     <a href="{{ url_for('login') }}">Sign in</a>
     {% else %}
-    <a href="{{ url_for('logout') }}">Logout</a>
     <a href="{{ url_for('index') }}">Home</a>
     <a href="#">Search</a>
     <a href="#">Favorite</a>
     <a href="#">Memories</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
     {% endif %}
   </div>
   <hr>

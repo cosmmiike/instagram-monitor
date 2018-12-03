@@ -36,10 +36,19 @@ def login():
 
         if settings is None:
             settings = set_instagram_cookies(username=form.username.data, password=form.password.data)
+            if settings is None:
+                flash('Invalid username or password')
+                return redirect(url_for('login'))
+            elif settings == -1:
+                flash('For security purposes, Instagram needs to check and validate your access')
+                return redirect(url_for('login'))
 
         api = get_instagram_api(cached_settings=settings)
         if api is None:
-            flash('Invalid username or password or connection error')
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        elif api == -1:
+            flash('For security purposes, Instagram needs to check and validate your access')
             return redirect(url_for('login'))
         else:
             resp = make_response(redirect(url_for('login')))
