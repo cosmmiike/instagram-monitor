@@ -18,7 +18,7 @@ def index():
     settings = request.cookies.get('instagram-monitor')
     api = get_instagram_api(settings)
     info = self_info(api)['user']
-    stories_tray = get_stories(api)['tray'][:5]
+    stories_tray = get_stories(api)['tray'][:7]
     posts_feed = get_feed(api)['feed_items']
     print(json.dumps(posts_feed))
     return render_template('index.html', title='Home', self_info=info,

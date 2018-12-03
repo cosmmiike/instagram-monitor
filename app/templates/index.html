@@ -1,54 +1,64 @@
 {% extends"base.html" %}
 
-{% block content %}
+{% block app_content %}
 
-<img src="{{ self_info.profile_pic_url }}" alt="">
-<p><b>id: </b>{{ self_info['pk'] }}</p>
-<p><b>Username: </b>{{ self_info['username'] }}</p>
-<p><b>Fullname: </b>{{ self_info['full_name'] }}</p>
-<p><b>Biography: </b>{{ self_info['biography'] }}</p>
-<p><b>E-mail: </b>{{ self_info['email'] }}</p>
-<p><b>Link: </b><a href="{{ self_info['external_url'] }}">{{ self_info['external_url'] }}</a></p>
-<p><b>Phone number: </b>{{ self_info['phone_number'] }}</p>
+<section class="profile_info container">
+  <img class="profile_info__userpic" src="{{ self_info.profile_pic_url }}" alt="">
+  <ul class="profile_info__list">
+    <li class="profile_info__item profile_info__item--username">
+      <p>{{ self_info['username'] }}</p>
+    </li>
+    <li class="profile_info__item profile_info__item--full_name">
+      <p>{{ self_info['full_name'] }}</p>
+    </li>
+    <li class="profile_info__item profile_info__item--biography">
+      <p>{{ self_info['biography'] }}</p>
+    </li>
+    <li class="profile_info__item profile_info__item--email">
+      <p>E-mail:
+        <a href="mailto:{{ self_info['email'] }}">
+          {{ self_info['email'] }}
+        </a>
+      </p>
+    </li>
+    <li class="profile_info__item profile_info__item--tel">
+      <p>Phone number:
+        <a href="tel:{{ self_info['phone_number'] }}">
+          {{ self_info['phone_number'] }}
+        </a>
+      </p>
+    </li>
+  </ul>
+</section>
 
-<h1>Feed</h1>
-<h2>Following</h2>
-
-<table>
-  <tr>
+<section class="stories container">
+  <h2>Following</h2>
+  <ul class="stories__tray">
     {% for story in stories %}
-    <td>
-      <img src="{{ story['user']['profile_pic_url'] }}" alt="">
-      <p>{{ story['user']['username'] }}</p>
-    </td>
+      <li class="stories__user">
+        <img class="stories__img"  src="{{ story['user']['profile_pic_url'] }}" alt="">
+        <p>{{ story['user']['username'] }}</p>
+      </li>
     {% endfor %}
-  </tr>
-</table>
+  </ul>
+</section>
 
-<h2>Posts</h2>
-
-<table>
-  <tr>
+<section class="posts container">
+  <h2>Feed</h2>
+  <ul class="posts__feed">
     {% for post in posts %}
-    <td>
       {% if 'media_or_ad' in post and 'injected' not in post['media_or_ad'] %}
-        {% if post['media_or_ad']['media_type'] == 1 %}
-          <img src="{{ post['media_or_ad']['image_versions2']['candidates'][1]['url'] }}" alt="">
-        {% endif %}
-
-        {% if post['media_or_ad']['media_type'] == 2 %}
-          <img src="{{ post['media_or_ad']['image_versions2']['candidates'][1]['url'] }}" alt="">
-        {% endif %}
-
-        {% if post['media_or_ad']['media_type'] == 8 %}
-          <img src="{{ post['media_or_ad']['carousel_media'][0]['image_versions2']['candidates'][1]['url'] }}" alt="">
-        {% endif %}
-
-        <p>{{ post['media_or_ad']['user']['username'] }}</p>
+        <li class="posts__item">
+          {% if post['media_or_ad']['media_type'] == 1 or post['media_or_ad']['media_type'] == 2 %}
+            <div class="posts__img" style="background-image: url('{{ post['media_or_ad']['image_versions2']['candidates'][0]['url'] }}');"></div>
+          {% else %}
+            <div class="posts__img" style="background-image: url('{{ post['media_or_ad']['carousel_media'][0]['image_versions2']['candidates'][0]['url'] }}');"></div>
+          {% endif %}
+          <p>{{ post['media_or_ad']['user']['username'] }}</p>
+        </li>
       {% endif %}
-    </td>
     {% endfor %}
-  </tr>
-</table>
+  </ul>
+</section>
 
 {% endblock %}
