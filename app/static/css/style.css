@@ -6,6 +6,11 @@ body {
   background-color: rgb(250, 250, 250)
 }
 
+a {
+  text-decoration: none;
+  color: rgb(38, 38, 38);
+}
+
 h1 {
   margin: 0;
   margin-bottom: 10px;
@@ -159,6 +164,7 @@ h2 {
 }
 
 .main_navigation__item--logo {
+  padding-left: 0;
   font-size: 20px;
   font-weight: 600;
   margin-right: 30px;
@@ -185,6 +191,7 @@ h2 {
 .profile_info__list {
   display: block;
   float: left;
+  max-width: calc(100% - 200px);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -219,31 +226,31 @@ h2 {
   border-bottom: 1px solid rgb(38, 38, 38);
 }
 
-.stories{
+.following{
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.stories__tray {
+.following__tray {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.stories__user {
+.following__user {
   display: inline-block;
   padding: 0 17px;
   text-align: center;
   width: 100px;
 }
 
-.stories__img {
+.following__img {
   width: 105px;
   height: 105px;
   margin-bottom: 10px;
   border-radius: 50%;
 }
 
-.stories__user p {
+.following__user p {
   margin: 0;
   font-size: 14px;
   overflow-x: hidden;
@@ -278,4 +285,48 @@ h2 {
   margin-bottom: 30px;
   overflow-x: hidden;
   font-size: 14px;
+}
+
+.stories {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
+}
+
+.stories__feed {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+.stories__item {
+  display: inline-block;
+  padding: 0 10px;
+  width: 110px;
+}
+
+.stories__img {
+  display: block;
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-size: auto 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #eee;
+}
+
+.stories__item p {
+  margin: 0;
+  overflow-x: hidden;
+  font-size: 14px;
+}
+
+.posts {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.highlights {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }

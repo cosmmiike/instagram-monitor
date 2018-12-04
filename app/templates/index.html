@@ -3,10 +3,14 @@
 {% block app_content %}
 
 <section class="profile_info container">
-  <img class="profile_info__userpic" src="{{ self_info.profile_pic_url }}" alt="">
+  <a href="{{ url_for('user', username=self_info['username']) }}">
+    <img class="profile_info__userpic" src="{{ self_info.profile_pic_url }}" alt="">
+  </a>
   <ul class="profile_info__list">
     <li class="profile_info__item profile_info__item--username">
-      <p>{{ self_info['username'] }}</p>
+      <a href="{{ url_for('user', username=self_info['username']) }}">
+        <p>{{ self_info['username'] }}</p>
+      </a>
     </li>
     <li class="profile_info__item profile_info__item--full_name">
       <p>{{ self_info['full_name'] }}</p>
@@ -31,13 +35,15 @@
   </ul>
 </section>
 
-<section class="stories container">
+<section class="following container">
   <h2>Following</h2>
-  <ul class="stories__tray">
+  <ul class="following__tray">
     {% for story in stories %}
-      <li class="stories__user">
-        <img class="stories__img"  src="{{ story['user']['profile_pic_url'] }}" alt="">
-        <p>{{ story['user']['username'] }}</p>
+      <li class="following__user">
+        <a href="{{ url_for('user', username=story['user']['username']) }}">
+          <img class="following__img"  src="{{ story['user']['profile_pic_url'] }}" alt="">
+          <p>{{ story['user']['username'] }}</p>
+        </a>
       </li>
     {% endfor %}
   </ul>
@@ -54,7 +60,9 @@
           {% else %}
             <div class="posts__img" style="background-image: url('{{ post['media_or_ad']['carousel_media'][0]['image_versions2']['candidates'][0]['url'] }}');"></div>
           {% endif %}
-          <p>{{ post['media_or_ad']['user']['username'] }}</p>
+          <a href="{{ url_for('user', username=post['media_or_ad']['user']['username']) }}">
+            <p>{{ post['media_or_ad']['user']['username'] }}</p>
+          </a>
         </li>
       {% endif %}
     {% endfor %}

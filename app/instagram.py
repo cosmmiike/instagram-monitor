@@ -24,7 +24,26 @@ def user_info(api: Client, username: str) -> dict:
     return api.user_info(user_id)
 
 
-def get_stories(api: Client) -> dict:
+def get_stories(api: Client, username: str) -> dict:
+    user_id = username_to_user_id(api, username)
+    reels = api.reels_media([user_id])['reels']
+    if str(user_id) in reels:
+        return reels[str(user_id)]
+    return None
+
+
+def get_posts(api: Client, username: str) -> dict:
+    """Get the feed for a specified user username"""
+    user_id = username_to_user_id(api, username)
+    return api.user_feed(user_id)
+
+
+def get_highligts(api: Client, username: str) -> dict:
+    user_id = username_to_user_id(api, username)
+    return api.highlights_user_feed(user_id)
+
+
+def get_stories_tray(api: Client) -> dict:
     return api.reels_tray()
 
 

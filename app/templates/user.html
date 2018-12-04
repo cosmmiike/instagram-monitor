@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+<section class="profile_info container">
+  <img class="profile_info__userpic" src="{{ user_info.profile_pic_url }}" alt="">
+  <ul class="profile_info__list">
+    <li class="profile_info__item profile_info__item--username">
+      <p>{{ user_info['username'] }}</p>
+    </li>
+
+    {% if user_info['full_name'] != "" %}
+    <li class="profile_info__item profile_info__item--full_name">
+      <p>{{ user_info['full_name'] }}</p>
+    </li>
+    {% endif %}
+
+    {% if user_info['biography'] != "" %}
+    <li class="profile_info__item profile_info__item--biography">
+      <p>{{ user_info['biography'] }}</p>
+    </li>
+    {% endif %}
+
+    {% if 'public_email' in user_info and user_info['public_email'] != "" %}
+    <li class="profile_info__item profile_info__item--email">
+      <p>E-mail:
+        <a href="mailto:{{ user_info['public_email'] }}">
+          {{ user_info['public_email'] }}
+        </a>
+      </p>
+    </li>
+    {% endif %}
+
+    {% if 'public_phone_number' in user_info and user_info['public_phone_number'] != "" %}
+    <li class="profile_info__item profile_info__item--tel">
+      <p>Phone number:
+        <a href="tel:+{{ user_info['public_phone_country_code'] }}{{ user_info['public_phone_number'] }}">
+          +{{ user_info['public_phone_country_code'] }}{{ user_info['public_phone_number'] }}
+        </a>
+      </p>
+    </li>
+    {% endif %}
+
+    {% if 'city_name' in user_info and user_info['city_name'] != "" %}
+    <li class="profile_info__item">City: {{ user_info['city_name'] }}</li>
+    {% endif %}
+  </ul>
+</section>
+
+{% if stories != None %}
+{% if stories['media_count'] > 0 %}
+<section class="stories container">
+  <h2>Stories</h2>
+  <ul class="stories__feed">
+    {% for story in stories['items'][:7] %}
+    <li class="stories__item">
+      <a href="{{ story['image_versions2']['candidates'][0]['url'] }}" download target="_blank">
+        <div class="stories__img" style="background-image: url('{{ story['image_versions2']['candidates'][1]['url'] }}');"></div>
+      </a>
+      <p>
+        <a href="{{ story['image_versions2']['candidates'][0]['url'] }}" download target="_blank">
+          Download
+        </a>
+      </p>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+{% endif %}
+
+<section class="posts container">
+  <h2>Posts</h2>
+  <ul class="stories__feed">
+    {% for post in posts['items'][:7] %}
+    <li class="stories__item">
+      {% if post['media_type'] == 1 or post['media_type'] == 2 %}
+      <a href="{{ post['image_versions2']['candidates'][0]['url'] }}" download target="_blank">
+        <div class="stories__img" style="background-image: url('{{ post['image_versions2']['candidates'][1]['url'] }}');"></div>
+      </a>
+      <p>
+        <a href="{{ post['image_versions2']['candidates'][0]['url'] }}" download target="_blank">
+          Download
+        </a>
+      </p>
+      {% else %}
+      <a href="{{ post['carousel_media'][0]['image_versions2']['candidates'][0]['url'] }}" download target="_blank">
+        <div class="stories__img" style="background-image: url('{{ post['carousel_media'][0]['image_versions2']['candidates'][1]['url'] }}');"></div>
+      </a>
+      <p>
+        <a href="{{ post['carousel_media'][0]['image_versions2']['candidates'][0]['url'] }}" download target="_blank">
+          Download
+        </a>
+      </p>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+
+{% if highligts != [] %}
+<section class="highlights container">
+  <h2>Highlights</h2>
+  <ul class="stories__feed">
+    {% for item in highlights %}
+    <li class="stories__item">
+      <div class="stories__img" style="background-image: url('{{ item['cover_media']['cropped_image_version']['url'] }}');"></div>
+      <p>{{ item.title }}</p>
+      <p> Show All </p>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% endblock %}

@@ -7,22 +7,8 @@ from app import app, db
 from app.forms import LoginForm
 from app.models import User
 from app.instagram import set_instagram_cookies, get_instagram_api, self_info,\
-                          get_stories, get_feed
-
-
-@app.route('/')
-@app.route('/index')
-def index():
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
-    settings = request.cookies.get('instagram-monitor')
-    api = get_instagram_api(settings)
-    info = self_info(api)['user']
-    stories_tray = get_stories(api)['tray'][:7]
-    posts_feed = get_feed(api)['feed_items']
-    print(json.dumps(posts_feed))
-    return render_template('index.html', title='Home', self_info=info,
-                           stories=stories_tray, posts=posts_feed)
+                          get_stories_tray, get_feed, user_info, get_stories,\
+                          get_posts, get_highligts
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -76,3 +62,33 @@ def logout():
     resp = make_response(redirect(url_for('index')))
     resp.set_cookie('instagram-monitor', '', expires=0)
     return resp
+
+
+@app.route('/index')
+@app.route('/')
+def index():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    settings = request.cookies.get('instagram-monitor')
+    api = get_instagram_api(settings)
+    info = self_info(api)['user']
+    stories_tray = get_stories_tray(api)['tray'][:7]
+    posts_feed = get_feed(api)['feed_items']
+    return render_template('index.html', title='Home', self_info=info,
+                           stories=stories_tray, posts=posts_feed)
+
+
+@app.route('/user/<username>')
+def user(username):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    settings = request.cookies.get('instagram-monitor')
+    api = get_instagram_api(settings)
+    info = user_info(api, username)['user']
+    stories = get_stories(api, username)
+    posts = get_posts(api, username)
+    highligts = get_highligts(api, username)['tray'][:7]
+
+    return render_template('user.html', title='Profile (@'+username+')',
+                           user_info=info, stories=stories, posts=posts,
+                           highlights=highligts)
