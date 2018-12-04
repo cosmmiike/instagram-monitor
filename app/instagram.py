@@ -43,6 +43,14 @@ def get_highligts(api: Client, username: str) -> dict:
     return api.highlights_user_feed(user_id)
 
 
+def get_followings(api: Client, username: str) -> dict:
+    """Get user followings"""
+    user_id = username_to_user_id(api, username)
+    rank_token = Client.generate_uuid()
+    followings = api.user_following(user_id, rank_token)
+    return followings
+
+
 def get_stories_tray(api: Client) -> dict:
     return api.reels_tray()
 

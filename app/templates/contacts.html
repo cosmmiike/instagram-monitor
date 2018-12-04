@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+<section class="contacts container">
+  <h1>Contacts</h1>
+  <ul class="contacts__list">
+    {% for user in contacts %}
+    <div class="contacts__item">
+      <a href="{{ url_for('user', username=user['username']) }}">
+        <img src="{{ user['profile_pic_url'] }}" alt="" width="150" height="150">
+      </a>
+      <div class="contacts__info">
+        <h3>{{ user['username'] }}</h3>
+        <p>{{ user['full_name'] }}</p>
+        <p class="button primary-button">
+          <a href="{{ url_for('user', username=user['username']) }}">
+            Open profile
+          </a>
+        </p>
+      </div>
+    </div>
+    {% endfor %}
+
+  </ul>
+
+</section>
+
+{% endblock %}

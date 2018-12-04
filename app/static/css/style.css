@@ -11,10 +11,49 @@ a {
   color: rgb(38, 38, 38);
 }
 
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  margin: 0;
+  padding: 0;
+}
+
 h1 {
   margin: 0;
   margin-bottom: 10px;
   font-size: 28px;
+}
+
+.button {
+  display: block;
+  padding: 3px 12px;
+  font-size: 14px;
+  float: left;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  background-color: rgb(255, 255, 255);
+  font-weight: 600;
+}
+
+.button a {
+  display: block;
+  height: 22px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
+}
+
+.primary-button {
+  border: none;
+  background-color: #3897f0;
+}
+
+.primary-button a {
+  color: rgb(255, 255, 255);
 }
 
 .login__description {
@@ -329,4 +368,47 @@ h2 {
 
 .highlights {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.contacts h1 {
+  margin-bottom: 20px;
+}
+
+.contacts__item {
+  display: inline-block;
+  width: calc(50% - 65px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  margin-right: 20px;
+  padding: 20px;
+  overflow-x: auto;
+  border-radius: 6px;
+}
+
+.contacts__item img {
+  display: block;
+  float: left;
+  width: 150px;
+  height: 150px;
+  margin-right: 30px;
+  border-radius: 50%;
+}
+
+.contacts__info {
+  display: block;
+  float: left;
+  width: calc(100% - 180px);
+}
+
+.contacts__info h3 {
+  width: calc(50% - 210px);
+  display: block;
+  margin: 0;
+  margin-bottom: 7px;
+}
+
+.contacts__info p {
+  display: block;
+  margin: 0;
+  margin-bottom: 20px;
 }

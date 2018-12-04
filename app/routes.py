@@ -8,7 +8,7 @@ from app.forms import LoginForm
 from app.models import User
 from app.instagram import set_instagram_cookies, get_instagram_api, self_info,\
                           get_stories_tray, get_feed, user_info, get_stories,\
-                          get_posts, get_highligts
+                          get_posts, get_highligts, get_followings
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -92,3 +92,16 @@ def user(username):
     return render_template('user.html', title='Profile (@'+username+')',
                            user_info=info, stories=stories, posts=posts,
                            highlights=highligts)
+
+
+@app.route('/contacts')
+def contacts():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    settings = request.cookies.get('instagram-monitor')
+    api = get_instagram_api(settings)
+    followings = get_followings(api, current_user.username)['users']
+    with open('test.json', 'w') as f:
+        print(json.dump(followings, f))
+    return render_template('contacts.html', title='Contacts',
+                           contacts=followings)
