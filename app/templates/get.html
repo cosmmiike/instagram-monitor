@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+<section class="get_media container">
+  <div class="login__block">
+    <h1>Download Instagram Media</h1>
+    <p class="login__description">Paste a link on a post or user profile and download it in a moment!</p>
+    <form class="get_media__form form" action="" method="post" novalidate>
+      {{ form.hidden_tag() }}
+      <div class="form__field_group">
+        <p class="form__label">{{ form.link.label }}</p>
+        <p class="form__field">{{ form.link(class="form__text_input fw") }}</p>
+        <p>{{ form.submit(class="form__submit fw") }}</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+{% endblock %}

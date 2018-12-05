@@ -1,6 +1,8 @@
 import json
 import codecs
+import re
 from instagram_private_api import Client
+from instagram_web_api import Client as Client_web
 
 
 def user_id_to_username(api: Client, id: int) -> dict:
@@ -59,6 +61,22 @@ def get_feed(api: Client) -> dict:
     return api.feed_timeline()
 
 
+def get_post_info(web_api: Client, shortcode: str) -> dict:
+    return web_api.media_info2(shortcode)
+
+
+def link_to_shortcode(link: str) -> bool:
+    res = re.search('(?<=instagram.com/p/)[\d\w-]+', link);
+    if res is not None:
+        return res.group(0)
+
+
+def link_to_username(link: str) -> bool:
+    res = re.search('(?<=instagram.com/)[\d\w.-]+', link);
+    if res is not None:
+        return res.group(0)
+
+
 def to_json(python_object):
     if isinstance(python_object, bytes):
         return {'__class__': 'bytes',
@@ -75,26 +93,46 @@ def from_json(json_object):
 def set_instagram_cookies(username, password):
     try:
         api = Client(username, password)
+        web_api = Client_web(auto_patch=True, drop_incompat_keys=False,
+                             username='cosmmiike', password='36912desirDESIR')
         cached_settings = json.dumps(api.settings, default=to_json)
+        cached_settings_web = json.dumps(web_api.settings, default=to_json)
         print('New settings')
-        return cached_settings
+        return cached_settings, cached_settings_web
 
     except Exception as e:
         print(e)
         if str(e) == 'checkpoint_challenge_required':
-            return -1
-        return None
+            return -1, -1
+        return None, None
 
 
-def get_instagram_api(cached_settings):
+def get_instagram_api(cached_settings, cached_settings_web):
     try:
         settings = json.loads(cached_settings, object_hook=from_json)
+        settings_web = json.loads(cached_settings_web, object_hook=from_json)
         api = Client(username=None, password=None, settings=settings)
+        web_api = Client_web(username=None, password=None, settings=settings_web)
         print('Reusing settings')
-        return api
+        return api, web_api
 
     except Exception as e:
         print(e)
         if str(e) == 'checkpoint_challenge_required':
-            return -1
-        return None
+            return -1, -1
+        return None, None
+
+
+# cached_settings, cached_settings_web = set_instagram_cookies(username = '', password='')
+# api, web_api = get_instagram_api(cached_settings, cached_settings_web)
+# print('Connection API & WEB API')
+#
+# xxx = api.current_user()
+# username = ''
+# user_id = username_to_user_id(api, username)
+# shortcode = ''
+# yyy = web_api.media_info2(shortcode)
+#
+# print(json.dumps(xxx))
+# with open('test.json', 'w') as f:
+#     print(json.dump(yyy, f))

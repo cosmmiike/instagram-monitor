@@ -21,7 +21,10 @@
         </li>
       {% else %}
         <li class="main_navigation__item">
-          <a href="{{ url_for('contacts') }}">Contacts</a>
+          <a href="{{ url_for('get_media') }}">Search</a>
+        </li>
+        <li class="main_navigation__item">
+          <a href="{{ url_for('contacts') }}">Following</a>
         </li>
         <li class="main_navigation__item">
           <a href="#">Favorite</a>

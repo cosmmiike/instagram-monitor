@@ -388,8 +388,8 @@ h2 {
 .contacts__item img {
   display: block;
   float: left;
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   margin-right: 30px;
   border-radius: 50%;
 }
